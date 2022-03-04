@@ -1,10 +1,14 @@
 <?php
 
   session_start();
-  
+    include('../config.php');
+    include('../classes/DB.php');
+    include('../classes/User.php');
+    include('../classes/Login.php');
+    include('../classes/Admin.php');
 
   $fetchObj = new Admin();
-  $fetchArray = $fetchObj->$fetchData();
+  $fetchArray = $fetchObj->fetchData();
   
 
 ?>
@@ -145,6 +149,9 @@
               <th scope="col">FullName</th>
               <th scope="col">Email</th>
               <th scope="col">Status</th>
+              <th scope="col">Role</th>
+              <th scope="col">Action</th>
+
             </tr>
           </thead>
           
@@ -154,18 +161,17 @@
             echo "<tr> 
               <td>".$val['id']."</td>
               <td>".$val['username']."</td>
-              <td>".$val['fullname']."</td>
+              <td>".$val['full_name']."</td>
               <td>".$val['email']."</td>
-              <td>".$val['Status']."</td>
-            </tr>"
-
+              <td>".$val['status']."</td>
+              <td>".$val['role']."</td>
+              <td><button>Approve</button><button>Reject</button><button>Delete</button></td>
+            </tr>";
           ?>
-            
-            
           </tbody>
-          
+          <?php } ?>
         </table>
-        <?php } ?>
+        
       </div>
     </main>
   </div>

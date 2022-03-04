@@ -1,3 +1,20 @@
+<?php
+
+  session_start();
+    include('./config.php');
+    include('./classes/DB.php');
+    include('./classes/User.php');
+    include('./classes/Login.php');
+    include('./classes/Admin.php');
+
+  $fetchObj = new Admin();
+  $fetchArray = $fetchObj->fetchData();
+  
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -37,7 +54,13 @@
     <link href="./assets/css/dashboard.css" rel="stylesheet">
   </head>
   <body>
+
+  <?php
+    if($_SESSION['user']['role']=="Admin"){
+
+?>
     
+
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +76,11 @@
 
 <div class="container-fluid">
   <div class="row">
+  <span>
+    <?php
+      echo $_SESSION['result'];
+    ?>
+    </span>
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
@@ -117,34 +145,88 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Fullname</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
+              <th scope="col">Username</th>
+              <th scope="col">FullName</th>
+              <th scope="col">Email</th>
+              <th scope="col">Status</th>
+              <th scope="col">Role</th>
+              <th scope="col">Action</th>
+
             </tr>
           </thead>
+          
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
+          <?php
+          foreach($fetchArray as $key => $val){
+            echo "<tr> 
+              <td>".$val['id']."</td>
+              <td>".$val['username']."</td>
+              <td>".$val['full_name']."</td>
+              <td>".$val['email']."</td>
+              <td>".$val['status']."</td>
+              <td>".$val['role']."</td>
+              <td>
+              <button type='submit' name='approve' value=".$val['id'].">Approve</button>
+              <button type='submit' name='approve' value=".$val['id'].">Restrict</button>
+              <button type='submit' name='approve' value=".$val['id'].">Delete</button>
+              </td>
+            </tr>";
+          ?>
           </tbody>
+          <?php } ?>
         </table>
+        
       </div>
     </main>
   </div>
+  
+
+  </div>
+
 </div>
+<?php 
+} 
+?>
+
+<?php
+    if($_SESSION['user']['role']=="customer"){
+
+?>
+
+  <div class="container">
+  
+            <a class="nav-link active" aria-current="page" href="dashboard.html">
+              <span data-feather="home"></span>
+              Dashboard
+            </a>
+            <h3>My Profile</h3>
+            <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" name="full_name" placeholder="Full Name">
+      <label for="floatingInput">Full Name</label>
+    </div>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>    
+
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" name="submit" value="signup">Update</button>
+    <p class="mt-5 mb-3 text-muted">&copy; CEDCOSS Technologies</p>
+          
+
+  </div>
+
+  <?php
+    }
+    ?>
+
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+
+
   </body>
 </html>
-
