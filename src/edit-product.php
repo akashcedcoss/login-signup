@@ -1,3 +1,24 @@
+<?php
+
+  session_start();
+  
+  include('./config.php');
+  include('./classes/DB.php');
+  include('./classes/User.php');
+  include('./classes/Login.php');
+  include('./classes/Admin.php');
+  include('./classes/ProductList.php');
+
+  $id = $_GET['id'];
+  $fetchObj = new ProductList();
+  $fetchArray = $fetchObj->fetchEditData($id);
+  print_r($fetchArray);
+
+  
+
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -57,7 +78,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.html">
+            <a class="nav-link active" aria-current="page" href="./admin/dashboard.php">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -69,13 +90,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="products.html">
+            <a class="nav-link" href="./add-product.php">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./customers.php">
               <span data-feather="users"></span>
               Customers
             </a>
@@ -92,13 +113,13 @@
               Integrations
             </a>
           </li>
-        </ul>        
+        </ul>
       </div>
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">Edit Product</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -111,40 +132,73 @@
         </div>
       </div>
 
+      
+        <form class="row g-3" action="./index.php" method="POST">
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="pName" name="name" value="<?php echo $fetchArray[0]['name']?>">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPassword4" class="form-label" >Category</label>
+            <input type="text" class="form-control" id="category" name="category" value="<?php echo $fetchArray[0]['category']?>">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label" >Price</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter Price..." name="price" value="<?php echo $fetchArray[0]['price']?>">
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary" name="updateProd" value="<?php echo $fetchArray[0]['id']?>">Update Product</button>
+          </div>
+      </form>
+      
+      
       <h2>Section title</h2>
       <div class="table-responsive">
+      <form action="index.php" method="post">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Fullname</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Category</th>
+              <th scope="col">Price</th>
+              <th scope="col">Action</th>
+
             </tr>
           </thead>
+          
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
+          <?php
+          foreach($fetchArray as $key => $val){
+            echo "<tr> 
+              <td>".$val['id']."</td>
+              <td>".$val['name']."</td>
+              <td>".$val['category']."</td>
+              <td>".$val['price']."</td>
+              <td>
+              <button type='submit' name='edit' value=".$val['id'].">Edit</button>
+              <button type='submit' name='delete' value=".$val['id'].">Delete</button>
+              </td>
+            </tr>";
+          ?>
           </tbody>
+          <?php } ?>
         </table>
+          </form>
       </div>
+
+
     </main>
   </div>
+
+  
+
+
 </div>
-  <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>
-

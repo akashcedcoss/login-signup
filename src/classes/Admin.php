@@ -9,4 +9,18 @@
             return $stmt->fetchAll();
             
     }
+    public function deleteUser($id, $table){
+        $sql = "DELETE FROM ".$table." WHERE id = ".$id."";
+        DB :: getInstance()->exec($sql);
+
+    }
+    public function approve($id,$action){
+        $sql = "UPDATE `users` SET `status` = 'Approved' WHERE `users`.`id` = $id";
+        DB :: getInstance()->exec($sql);
+    }
+    public function restrict($id,$action){
+        $sql = "UPDATE `users` SET `status` = 'Not Approved' WHERE `users`.`id` = $id";
+        DB :: getInstance()->exec($sql);
+    }
+    
 }

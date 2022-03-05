@@ -6,10 +6,11 @@
     include('../classes/User.php');
     include('../classes/Login.php');
     include('../classes/Admin.php');
+    include('../classes/ProductList.php');
 
   $fetchObj = new Admin();
   $fetchArray = $fetchObj->fetchData();
-  
+  print_r($fetchArray);
 
 ?>
 
@@ -85,7 +86,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.html">
+            <a class="nav-link active" aria-current="page" href="./dashboard.php">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -97,13 +98,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="products.html">
+            <a class="nav-link" href="../add-product.php">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../customers.php">
               <span data-feather="users"></span>
               Customers
             </a>
@@ -150,7 +151,7 @@
               <th scope="col">Email</th>
               <th scope="col">Status</th>
               <th scope="col">Role</th>
-              <th scope="col">Action</th>
+              
 
             </tr>
           </thead>
@@ -165,7 +166,6 @@
               <td>".$val['email']."</td>
               <td>".$val['status']."</td>
               <td>".$val['role']."</td>
-              <td><button>Approve</button><button>Reject</button><button>Delete</button></td>
             </tr>";
           ?>
           </tbody>

@@ -85,7 +85,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="dashboard.html">
+            <a class="nav-link active" aria-current="page" href="./admin/dashboard.php">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -97,13 +97,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="products.html">
+            <a class="nav-link" href="add-product.php">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="customers.php">
               <span data-feather="users"></span>
               Customers
             </a>
@@ -141,6 +141,12 @@
 
       <h2>Section title</h2>
       <div class="table-responsive">
+        <form action="index.php" method="post">
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" name="addUser">Add User</button>
+          </div>
+
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -167,15 +173,15 @@
               <td>".$val['role']."</td>
               <td>
               <button type='submit' name='approve' value=".$val['id'].">Approve</button>
-              <button type='submit' name='approve' value=".$val['id'].">Restrict</button>
-              <button type='submit' name='approve' value=".$val['id'].">Delete</button>
+              <button type='submit' name='restrict' value=".$val['id'].">Restrict</button>
+              <button type='submit' name='delete' value=".$val['id'].">Delete</button>
               </td>
             </tr>";
           ?>
           </tbody>
           <?php } ?>
         </table>
-        
+          </form>
       </div>
     </main>
   </div>

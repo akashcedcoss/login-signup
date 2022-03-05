@@ -6,6 +6,7 @@ session_start();
     include('classes/User.php');
     include('classes/Login.php');
     include('classes/Admin.php');
+    include('./classes/ProductList.php');
 
     if (isset($_POST['submit']) && ($_POST['submit']=='signup')){
         $username = $_POST['username'];
@@ -47,6 +48,52 @@ session_start();
             header("Location: admin/login.php");
 
         }
-        
-           
-}
+
+    }
+    if(isset($_POST['delete'])){
+        $del = new Admin();
+        $del->deleteUser($_POST['delete'], 'users');
+        header("Location: customers.php");
+    }
+
+    if(isset($_POST['approve'])){
+        $update = new Admin();
+        $update->approve($_POST['approve'], 'approve');
+        header("Location: customers.php");
+    }
+
+    if(isset($_POST['restrict'])){
+        $update = new Admin();
+        $update->restrict($_POST['restrict'], 'restrict');
+        header("Location: customers.php");
+    }
+    if(isset($_POST['addProd'])){
+        $addP = new ProductList();
+        $addP->addProduct($_POST['name'], $_POST['category'], $_POST['price']);
+        header("Location: add-product.php");
+
+    }
+    if(isset($_POST['delete'])){
+        $del = new ProductList();
+        $del->deleteProduct($_POST['delete'], 'product');
+        header("Location: add-product.php");
+    }
+    if(isset($_POST['edit'])){
+        $id = $_POST['edit'];
+        header("Location: edit-product.php?id=".$id." ");
+    }
+    if(isset($_POST['updateProd'])){
+        $id = $_POST['updateProd'];
+        $update = new ProductList();
+        $update->updateProduct($id, $_POST['name'], $_POST['category'], $_POST['price']);
+        header("Location: add-product.php");
+
+    }
+    if(isset($_POST['addUser'])){
+        $addP = new User();
+        $addP->addUser($_POST['username'], $_POST['name'], $_POST['email'], $_POST['password'], $_POST['rePassword'], $_POST['role'], $_POST['status']);
+        header("Location: customers.php");
+
+    }
+
+?>
