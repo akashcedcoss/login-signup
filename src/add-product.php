@@ -18,6 +18,10 @@
 
 
 
+
+
+
+
   if(isset($_POST['searchProduct'])){
     $searchP = $_POST['searchField'];
   
@@ -147,7 +151,7 @@
       </div>
 
       
-        <form class="row g-3" action="./index.php" method="POST">
+        <form class="row g-3" action="./index.php" method="POST" enctype="multipart/form-data">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Product Name</label>
             <input type="text" class="form-control" id="pName" name="name">
@@ -160,6 +164,10 @@
             <label for="inputAddress" class="form-label" >Price</label>
             <input type="text" class="form-control" id="price" placeholder="Enter Price..." name="price">
           </div>
+          <div class="col-12">
+          <label for="picture">Picture:</label>
+            <input type="file" name="picture" id="picture">
+    </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary" name="addProd">Add Product</button>
           </div>
@@ -181,6 +189,7 @@
 
 
 
+
       
       
       <h2>Section title</h2>
@@ -190,6 +199,7 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">Product Image</th>
               <th scope="col">Product Name</th>
               <th scope="col">Category</th>
               <th scope="col">Price</th>
@@ -203,6 +213,7 @@
           foreach($fetchArray as $key => $val){
             echo "<tr> 
               <td>".$val['id']."</td>
+              <td><img style='height:150px; width: 120px; float:left; margin-left:4%; margin-top:4%;' src='./uploads/".$val['image']."'> </td>
               <td>".$val['name']."</td>
               <td>".$val['category']."</td>
               <td>".$val['price']."</td>

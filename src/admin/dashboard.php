@@ -55,14 +55,11 @@
     <link href="./assets/css/dashboard.css" rel="stylesheet">
   </head>
   <body>
+<?php
+if($_SESSION['user']['role']=="Admin")
+{?>
 
-  <?php
-    if($_SESSION['user']['role']=="Admin"){
-
-?>
-    
-
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -157,19 +154,19 @@
           </thead>
           
           <tbody>
-          <?php
-          foreach($fetchArray as $key => $val){
-            echo "<tr> 
-              <td>".$val['id']."</td>
-              <td>".$val['username']."</td>
-              <td>".$val['full_name']."</td>
-              <td>".$val['email']."</td>
-              <td>".$val['status']."</td>
-              <td>".$val['role']."</td>
-            </tr>";
-          ?>
+            <?php
+              foreach ($fetchArray as $key => $val) {
+                echo"<tr> 
+                <td>".$val['id']."</td>
+                <td>".$val['username']."</td>
+                <td>".$val['full_name']."</td>
+                <td>".$val['email']."</td>
+                <td>".$val['status']."</td>
+                <td>".$val['role']."</td>
+                </tr>";
+              ?>
           </tbody>
-          <?php } ?>
+              <?php } ?>
         </table>
         
       </div>

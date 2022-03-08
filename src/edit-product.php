@@ -159,6 +159,7 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">Product Image</th>
               <th scope="col">Product Name</th>
               <th scope="col">Category</th>
               <th scope="col">Price</th>
@@ -172,6 +173,7 @@
           foreach($fetchArray as $key => $val){
             echo "<tr> 
               <td>".$val['id']."</td>
+              <td><img style='height:150px; width: 120px; float:left; margin-left:4%; margin-top:4%;' src='./uploads/".$val['image']."'> </td>
               <td>".$val['name']."</td>
               <td>".$val['category']."</td>
               <td>".$val['price']."</td>

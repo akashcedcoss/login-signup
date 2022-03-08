@@ -71,8 +71,11 @@ session_start();
         header("Location: customers.php");
     }
     if(isset($_POST['addProd'])){
+
+        move_uploaded_file($_FILES["picture"]["tmp_name"], "uploads/" . $_FILES["picture"]["name"]);
+
         $addP = new ProductList();
-        $addP->addProduct($_POST['name'], $_POST['category'], $_POST['price']);
+        $addP->addProduct($_POST['name'], $_POST['category'], $_POST['price'], $_FILES["picture"]["name"]);
         $_SESSION['fetchArray']=[];
         header("Location: add-product.php");
 
@@ -102,5 +105,13 @@ session_start();
         session_destroy();
         
     }
+
+    if(isset($_POST['addCart'])){
+        $id = $_POST['addCart'];
+        
+        header("Location: frontend/cart.php");
+
+    }
+    
 
 ?>

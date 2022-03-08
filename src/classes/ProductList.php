@@ -1,12 +1,10 @@
-<?php
-
-    class ProductList{
-        
-        public function addProduct($name, $category, $price){
-            $sql = "INSERT INTO product (name, category, price)
-                    VALUES ('".$name."', '".$category."', ".$price.")";
-            DB::getInstance()->exec($sql);
-            
+<?php 
+    class ProductList 
+        {
+            public function addProduct($name, $category, $price, $image) {
+            $sql = "INSERT INTO product (name, category, price, image)
+                    VALUES ('".$name."', '".$category."', ".$price.", '".$image."')";
+            DB::getInstance()->exec($sql);  
         }
         function fetchData($query){
             $sql = "SELECT * FROM product ".$query."";
