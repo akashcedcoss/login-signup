@@ -8,11 +8,26 @@
   include('./classes/Login.php');
   include('./classes/Admin.php');
   include('./classes/ProductList.php');
-
   $fetchObj = new ProductList();
-  $fetchArray = $fetchObj->fetchData();
-  print_r($fetchArray);
 
+  if(count($_SESSION['fetchArray'])==0){
+    $query="";
+    $fetchArray = $fetchObj->fetchData($query);
+    $_SESSION['fetchArray'] = $fetchArray;
+  }
+
+
+
+  if(isset($_POST['searchProduct'])){
+    $searchP = $_POST['searchField'];
+  
+    $query = "WHERE id LIKE '%".$searchP."%' OR category LIKE '%".$searchP."%' OR name LIKE '%".$searchP."%'";
+
+    $fetchArray = $fetchObj->fetchData($query);
+    $_SESSION['fetchArray'] = $fetchArray;
+
+  }
+  $fetchArray = $_SESSION['fetchArray'];
 ?>
 
 <!doctype html>
@@ -63,7 +78,10 @@
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Sign out</a>
+    <form action="../index.php" method="post">
+        <button type = "submit"  name = "logout">Signout</button>
+      <!-- <a class="nav-link px-3" href="#" name = "logout">Sign out</a> -->
+      </form>
     </div>
   </div>
 </header>
@@ -146,6 +164,23 @@
             <button type="submit" class="btn btn-primary" name="addProd">Add Product</button>
           </div>
       </form>
+
+
+
+      <form action="" class="row g-3" method="POST">
+      <div class="col-12">
+          <label class="visually-hidden" for="inlineFormInputGroupUsername">Search</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="searchField" placeholder="Enter id,name...">
+          </div>
+    </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" name="searchProduct">Search</button>
+        </div>
+    </form>
+
+
+
       
       
       <h2>Section title</h2>

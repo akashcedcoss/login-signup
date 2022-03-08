@@ -12,7 +12,7 @@
   $id = $_GET['id'];
   $fetchObj = new ProductList();
   $fetchArray = $fetchObj->fetchEditData($id);
-  print_r($fetchArray);
+  
 
   
 

@@ -8,8 +8,8 @@
             DB::getInstance()->exec($sql);
             
         }
-        function fetchData(){
-            $sql = "SELECT * FROM product";
+        function fetchData($query){
+            $sql = "SELECT * FROM product ".$query."";
                 $stmt = DB::getInstance()->prepare($sql);
                 $stmt->execute();
                 $rsult = $stmt->setFetchMode(PDO::FETCH_ASSOC);

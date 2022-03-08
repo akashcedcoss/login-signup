@@ -30,6 +30,9 @@ session_start();
     if (isset($_POST['signin'])){
         $email = $_POST['email'];
         $password = $_POST['password'];
+        if($email == "" || $password == ""){
+            $_SESSION['result'] = "Please input correct data";
+        }
         $user = new Login($email, $password);
         $userdata = $user->authenticate();
         if(count($userdata)>=1){
@@ -70,6 +73,7 @@ session_start();
     if(isset($_POST['addProd'])){
         $addP = new ProductList();
         $addP->addProduct($_POST['name'], $_POST['category'], $_POST['price']);
+        $_SESSION['fetchArray']=[];
         header("Location: add-product.php");
 
     }
@@ -90,10 +94,13 @@ session_start();
 
     }
     if(isset($_POST['addUser'])){
-        $addP = new User();
-        $addP->addUser($_POST['username'], $_POST['name'], $_POST['email'], $_POST['password'], $_POST['rePassword'], $_POST['role'], $_POST['status']);
-        header("Location: customers.php");
-
+        header("Location: add-user.php");
+        
+    }
+    if(isset($_POST['logout'])){
+        header("Location: admin/login.php");
+        session_destroy();
+        
     }
 
 ?>

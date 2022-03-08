@@ -16,6 +16,7 @@
         }
 
         public function authenticate(){
+            
             $sql = "SELECT * FROM users 
                     WHERE email = '".$this->email."' AND password = '" .$this->password."'";
             $stmt = DB::getInstance()->prepare($sql);
