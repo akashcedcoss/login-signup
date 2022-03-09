@@ -7,19 +7,20 @@ session_start();
     include('classes/Login.php');
     include('classes/Admin.php');
     include('./classes/ProductList.php');
+    include('./classes/Cart.php');
 
-    if (isset($_POST['submit']) && ($_POST['submit']=='signup')){
+    if (isset($_POST['submit']) && ($_POST['submit']=='signup')) {
         $username = $_POST['username'];
         $fullName = $_POST['full_name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $rePassword = $_POST['re_password'];
-        if($password == $rePassword){
+        if ($password == $rePassword) {
             $user = new User($username, $fullName, $email, $password, $rePassword, 'customer', 'Not Approved');
             $user->addUser();
             header("Location: admin/login.php");
 
-        }else{
+        } else {
             $msg = "Password and Confirm Password Do Not Match";
             echo User::error($msg);
             header("Location: admin/signup.php");
@@ -27,88 +28,105 @@ session_start();
         
     }
 
-    if (isset($_POST['signin'])){
+    if (isset($_POST['signin'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if($email == "" || $password == ""){
+        if ($email == "" || $password == "") {
             $_SESSION['result'] = "Please input correct data";
         }
         $user = new Login($email, $password);
         $userdata = $user->authenticate();
-        if(count($userdata)>=1){
-            if($userdata[0]['status']=='Approved' || $userdata[0]['role']=="Admin"){
+        if(count($userdata)>=1) {
+            if ($userdata[0]['status']=='Approved' || $userdata[0]['role']=="Admin") {
                 $_SESSION['user']= $userdata[0];
                 $_SESSION['result'] = "Welcome '".$userdata[0]['username']."' you are successfully logged in.";
                 header("Location: admin/dashboard.php");
             }
-            else{
+            else {
                 $_SESSION['result'] = "You are Not yet Approved...";
                 header("Location: admin/login.php");
             }
 
-        }else{
+        }else  {
             $_SESSION['result'] = "Wrong Login Credential...";
             header("Location: admin/login.php");
 
         }
 
     }
-    if(isset($_POST['delete'])){
+    if(isset($_POST['delete'])) {
         $del = new Admin();
         $del->deleteUser($_POST['delete'], 'users');
         header("Location: customers.php");
     }
 
-    if(isset($_POST['approve'])){
+    if(isset($_POST['approve'])) {
         $update = new Admin();
         $update->approve($_POST['approve'], 'approve');
         header("Location: customers.php");
     }
 
-    if(isset($_POST['restrict'])){
+    if(isset($_POST['restrict'])) {
         $update = new Admin();
         $update->restrict($_POST['restrict'], 'restrict');
         header("Location: customers.php");
     }
-    if(isset($_POST['addProd'])){
+    if(isset($_POST['addProd'])) {
 
         move_uploaded_file($_FILES["picture"]["tmp_name"], "uploads/" . $_FILES["picture"]["name"]);
-
         $addP = new ProductList();
         $addP->addProduct($_POST['name'], $_POST['category'], $_POST['price'], $_FILES["picture"]["name"]);
         $_SESSION['fetchArray']=[];
         header("Location: add-product.php");
 
     }
-    if(isset($_POST['delete'])){
+    if(isset($_POST['delete'])) {
         $del = new ProductList();
         $del->deleteProduct($_POST['delete'], 'product');
         header("Location: add-product.php");
     }
-    if(isset($_POST['edit'])){
+    if(isset($_POST['edit'])) {
         $id = $_POST['edit'];
         header("Location: edit-product.php?id=".$id." ");
     }
-    if(isset($_POST['updateProd'])){
+    if(isset($_POST['updateProd'])) {
         $id = $_POST['updateProd'];
         $update = new ProductList();
         $update->updateProduct($id, $_POST['name'], $_POST['category'], $_POST['price']);
         header("Location: add-product.php");
 
     }
-    if(isset($_POST['addUser'])){
+    if(isset($_POST['addUser'])) {
         header("Location: add-user.php");
         
     }
-    if(isset($_POST['logout'])){
+    if(isset($_POST['logout'])) {
         header("Location: admin/login.php");
         session_destroy();
         
     }
 
-    if(isset($_POST['addCart'])){
+    if(isset($_POST['addCart'])) {
         $id = $_POST['addCart'];
         
+        if(!isset($_SESSION['cart'])) {
+            $_SESSION['cart']=array();
+        }
+        
+
+        array_push($_SESSION['cart'], $id);
+      
+        $addToCart = new Cart();
+
+        $prodArray =array();
+        foreach ($_SESSION['cart'] as $key=>$value) {
+            
+        array_push($prodArray, $addToCart->fetchData($value));
+            
+
+        }
+        $_SESSION['cartArray'] = $prodArray;
+       
         header("Location: frontend/cart.php");
 
     }

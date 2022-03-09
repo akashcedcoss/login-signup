@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 include('../config.php');
 include('../classes/DB.php');
@@ -8,15 +9,10 @@ include('../classes/Login.php');
 include('../classes/Admin.php');
 include('../classes/ProductList.php');
 
-
-$fetchObj = new ProductList();
-
-
-  if(count($_SESSION['fetchArray'])==0){
-    $query="";
-    $fetchArray = $fetchObj->fetchData($query);
-    $_SESSION['fetchArray'] = $fetchArray;
-  }
+// echo "<pre>";
+// print_r($_SESSION['cartArray']);
+// echo "</pre>";
+$addC = $_SESSION['cartArray'];
 
 
 ?>
@@ -74,21 +70,23 @@ $fetchObj = new ProductList();
             </tr>
             
             <?php
-            foreach($fetchArray as $key => $val){
+            foreach($addC as $key => $val) {
+            
             echo '<tr>
-                <td>'.$val['name'].'</td>
-                <td>'.$val['price'].'</td>
+                <td>'.$val[0]['name'].'</td>
+                <td>'.$val[0]['price'].'</td>
                 <td>
                     <input type="number" class="w-20" name = "quantity" value = "1" minlength="1">
                     <input type="button" class="btn btn-secondary ms-1 w-20" value="update">
                     <a href="#" class="link-danger">Remove</a>
                 </td>
-                <td>'.$val['price'].'</td>
+                <td>'.$val[0]['price'].'</td>
             </tr>
             
            '
              ?> 
              <?php } ?>
+             
 
              <tfoot>
                 <tr>

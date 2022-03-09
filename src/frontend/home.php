@@ -1,24 +1,23 @@
 <?php
-
+session_start();
 include('../config.php');
 include('../classes/DB.php');
 include('../classes/User.php');
 include('../classes/Login.php');
 include('../classes/Admin.php');
 include('../classes/ProductList.php');
+include('../classes/Cart.php');
 
 $fetchObj = new ProductList();
 
 
-  if(count($_SESSION['fetchArray'])==0){
     $query="";
     $fetchArray = $fetchObj->fetchData($query);
     $_SESSION['fetchArray'] = $fetchArray;
+  
+  if(!isset($_SESSION['cart'])){
+    $_SESSION['cart']=array();
   }
-  print_r($fetchArray);
-
-
-
 
 
 
