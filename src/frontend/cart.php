@@ -14,6 +14,28 @@ include('../classes/ProductList.php');
 // echo "</pre>";
 $addC = $_SESSION['cartArray'];
 
+// print_r($addC);
+
+
+
+if(isset($_POST['update'])){
+  $id = $_POST['update'];
+  $qty = $_POST['quantity'];
+  $sql = "UPDATE `product` SET `quantity` = '$qty' WHERE `product`.`id` = $id;";
+  $stmt = DB::getInstance()->prepare($sql);
+  $stmt->execute();  
+  
+
+}
+
+if(isset($_POST['checkout'])){
+  header("Location: checkout.php");  
+  
+
+}
+
+
+
 
 ?>
 <!doctype html>
@@ -57,6 +79,7 @@ $addC = $_SESSION['cartArray'];
 
     <div class="row g-5">
       <div class="col order-md-last">
+        <form action="" method="post">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
           <span class="badge bg-primary rounded-pill">3</span>
@@ -70,22 +93,37 @@ $addC = $_SESSION['cartArray'];
             </tr>
             
             <?php
+            $total = 0;
+            
             foreach($addC as $key => $val) {
+              $total = $total + $val[0]['price'];
+              // echo $total;
             
             echo '<tr>
                 <td>'.$val[0]['name'].'</td>
-                <td>'.$val[0]['price'].'</td>
-                <td>
-                    <input type="number" class="w-20" name = "quantity" value = "1" minlength="1">
-                    <input type="button" class="btn btn-secondary ms-1 w-20" value="update">
+                <td>'.$val[0]['price'].'<input type="hidden" id = "price" name="price" value="' . $val[0]['price'] .'"></td>
+                <td><form action = "" method="POST">
+                    <input type="number" class="w-20 quantity"  name = "quantity" id = "quantity" min = "1" max="10" value="'.$val[0]['quantity'].'">
+                    <button type="submit" name="update" class="btn btn-secondary ms-1 w-20" value="'.$val[0]['id'].'"> Update </button>
                     <a href="#" class="link-danger">Remove</a>
+                    </form>
                 </td>
-                <td>'.$val[0]['price'].'</td>
+                <td>'.$val[0]['quantity'] * $val[0]['price'].'</td>
+                      
+                <td><input type="hidden" id = "price" name="gTotal" value="' . $val[0]['price'] .'"></td>
             </tr>
+            
             
            '
              ?> 
              <?php } ?>
+             <div class="row g-5 align-items-right">
+        <div class="col-3">
+            
+                    <button type="submit" name="checkout" class="btn btn-primary">Checkout</button>
+            </form>
+        </div>
+    </div>
              
 
              <tfoot>
@@ -94,15 +132,10 @@ $addC = $_SESSION['cartArray'];
                 </tr>
             </tfoot>
         </table>
+        </form>
       </div>
     </div>
-    <div class="row g-5 align-items-right">
-        <div class="col-3">
-            <form>
-                    <button type="submit" class="btn btn-primary">Checkout</button>
-            </form>
-        </div>
-    </div>
+    
   </main>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -115,8 +148,14 @@ $addC = $_SESSION['cartArray'];
   </footer>
 </div>
 
+<div id="result">
+  adfssdgdsag
+
+</div>
+
 
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="./assets/js/form-validation.js"></script>
+    
   </body>
 </html>

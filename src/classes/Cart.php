@@ -9,9 +9,10 @@
         $rsult = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll();
     }
-    function quantity() {
-
+    function deleteP($id){
+        
     }
+    
 
 }
 

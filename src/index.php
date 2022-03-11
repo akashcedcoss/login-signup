@@ -115,9 +115,7 @@ session_start();
         
 
         array_push($_SESSION['cart'], $id);
-      
         $addToCart = new Cart();
-
         $prodArray =array();
         foreach ($_SESSION['cart'] as $key=>$value) {
             
@@ -130,6 +128,7 @@ session_start();
         header("Location: frontend/cart.php");
 
     }
+        
     
 
 ?>

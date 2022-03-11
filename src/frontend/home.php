@@ -152,8 +152,10 @@ $fetchObj = new ProductList();
                           <h5>'.$val['name'].'</h5>
                         <p class="card-text">'.$val['category'].'</p>
                         <div class="d-flex justify-content-between align-items-center">
-                          <p><strong>'.$val['price'].'</strong>&nbsp;<del><small class="link-danger">$180</small></del></p>
+                        
+                          <p><strong>'.$val['price'].'</strong>  &nbsp;<del><small class="link-danger">$180</small></del></p>
                           <button class="btn btn-primary" name="addCart" value = "'.$val['id'].'">Add To Cart</button>
+                          <input type="hidden" name="prodID" value="' . $val['id'] . '"> 
                         </div>
                       </div>
                     </div>
