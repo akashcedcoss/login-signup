@@ -25,7 +25,7 @@ session_start();
         $pname = "Mobiles";
         $pprice = $_SESSION['totalAmount'];
         $placed = new Checkout();
-        $placed->checkoutP($fname, $lname, $username, $address, $country, $state, $zip, $pname, $pprice); 
+        $placed->checkoutP($fname, $lname, $username, $address, $country, $state, $zip, $pname, $pprice);
         print_r($placed);
     }
 ?>
@@ -103,7 +103,7 @@ session_start();
           
           
           <?php } ?>
-          
+
           <li class="list-group-item d-flex justify-content-between bg-light">
           </li>
           <li class="list-group-item d-flex justify-content-between">
